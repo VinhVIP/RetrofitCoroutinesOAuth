@@ -3,8 +3,8 @@ package com.vinh.retrofitcoroutinesoauth
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.vinh.retrofitcoroutinesoauth.data.models.User
 import com.vinh.retrofitcoroutinesoauth.data.requests.LoginRequest
 import com.vinh.retrofitcoroutinesoauth.data.responses.LoginResponse
@@ -16,18 +16,21 @@ import com.vinh.retrofitcoroutinesoauth.viewmodels.MainViewModelFactory
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
     lateinit var binding: ActivityMainBinding
 
     private lateinit var sessionManager: SessionManager
+
+    // KTX
+    // ViewModel using Factory
+    private val viewModel: MainViewModel by viewModels {
+        MainViewModelFactory(Repository(this))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val repository = Repository(this)
-        val viewModelFactory = MainViewModelFactory(repository)
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         sessionManager = SessionManager(this)
 
