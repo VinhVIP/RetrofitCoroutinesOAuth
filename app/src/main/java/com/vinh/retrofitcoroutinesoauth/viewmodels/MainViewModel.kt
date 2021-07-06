@@ -12,9 +12,9 @@ import retrofit2.Response
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
-    val loginResponse = MutableLiveData<Response<LoginResponseData>>()
+    val loginResponse:MutableLiveData<Response<LoginResponseData>> = MutableLiveData()
 
-    val profile = MutableLiveData<Response<UserResponseData>>()
+    val profile: MutableLiveData<Response<UserResponseData>> = MutableLiveData()
 
     fun login(request: LoginRequest) {
         viewModelScope.launch {
@@ -30,6 +30,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             println("---------end login---------")
         }
     }
+
 
     fun getProfile() {
         viewModelScope.launch {
